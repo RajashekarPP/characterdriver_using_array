@@ -65,6 +65,7 @@ int main()
 				{	
 					int byteswritten=0;
 					byteswritten = write(fdw , writebuf , strlen(writebuf));
+//					byteswritten = write(fdw , writebuf , byteswritten+5);
 					if(byteswritten < 0)
 					{
 						puts("unable to write data");break;

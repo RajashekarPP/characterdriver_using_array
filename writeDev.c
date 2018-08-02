@@ -4,12 +4,11 @@
 int byteswritten =0 ;//datasize = count;
 
 ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff_t *f_pos)
-{
-
+{	
 	int ret;
 	struct myDev *device ;
-	struct myQset *head ; //head pointer used to store  the address of the first quantum set
-
+	struct myQset *head ; //head pointer used to store  the address of the  quantum set
+//	byteswritten = 0;
 	printk(KERN_INFO "BEGINS %s\n",__func__);
 	device = filep->private_data;
 	head = device -> data;
