@@ -1,13 +1,12 @@
 #include"headers.h"
 #include"declarations.h"
 
-
+int byteswritten =0 ;//datasize = count;
 
 ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff_t *f_pos)
 {
 
 	int ret;
-	int byteswritten =0 ;//datasize = count;
 	struct myDev *device ;
 	struct myQset *head ; //head pointer used to store  the address of the first quantum set
 

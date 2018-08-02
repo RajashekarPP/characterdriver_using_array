@@ -59,7 +59,7 @@ struct myDev
 	
 };
 
-
+extern int byteswritten;
 extern int deletemydevices(void);
 int openDev(struct inode *, struct file *);
 int releaseDev(struct inode *, struct file *);

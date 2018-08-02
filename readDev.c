@@ -10,7 +10,7 @@ ssize_t readDev(struct file *filep , char __user *buf , size_t count , loff_t *f
 	device = filep->private_data;
 	head = device->data;	
 	
-	ret = copy_to_user(buf+bytesread , head->data , count);
+	ret = copy_to_user(buf+bytesread , head->data , byteswritten);
 	if(ret)
 	printk(KERN_INFO "Unable to copy data to user\n");
 	bytesread += strlen(head->data);
