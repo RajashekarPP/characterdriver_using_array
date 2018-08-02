@@ -10,17 +10,12 @@ int majorno = MAJORNO;
 int minorno = 0 ;     // default we will assign 0 as minor number
 int deviceno = DEVICE_COUNT;
 
-int no_of_registers = NUM_REGISTRES;
-int size_of_registers = SIZE_REGISTRES;
-
 struct myDev *myDevices;        
 
 static struct file_operations fops = {
 	open:openDev,
-	//release:releaseDev,
 	read:readDev,
 	write:writeDev,
-	//llseek:llseekDev
 };
 
 static int __init MyCharDev_init(void)

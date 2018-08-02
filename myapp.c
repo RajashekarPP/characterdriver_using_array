@@ -51,6 +51,7 @@ int main()
 				{
 					if(read(fdr , readbuf , 100) < 0)
 					{	
+						close(fdr);	
 						puts("unable to read data");break;
 					}
 					printf("msg read is \n%s\n",readbuf);
@@ -59,6 +60,7 @@ int main()
 				{
 					puts("file not opened in readmode");
 				}
+				close(fdr);	
 				break;
 			case 3 :
 				if( (writemode == 1) && (fdw >0))
@@ -68,6 +70,7 @@ int main()
 //					byteswritten = write(fdw , writebuf , byteswritten+5);
 					if(byteswritten < 0)
 					{
+						close(fdw);
 						puts("unable to write data");break;
 					}
 					puts("msg has been written");
@@ -76,11 +79,12 @@ int main()
 				else
 				{
 					puts("file not opened in writemode");
-				}				
+				}			
+				close(fdw);	
 				break;
 			case 4:
-				close(fdr);
-				close(fdw);
+			//	close(fdr);
+			//	close(fdw);
 				printf("closed file fdr = %d\n closed file fdw = %d\n",fdr,fdw);
 				readmode=writemode=0;
 				break;

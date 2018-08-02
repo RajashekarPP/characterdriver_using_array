@@ -5,7 +5,7 @@ extern dev_t Dev_Id;
 extern int majorno;
 extern int deviceno;
 extern struct myDev *myDevices;
-
+extern int mm1;
 
 void __exit MyCharDev_exit(void)
 {	
@@ -18,6 +18,12 @@ void __exit MyCharDev_exit(void)
 int deletemydevices()
 {
 	int i;
+
+	if(mm1 == 1)
+	{
+		kfree(myDevices->data);
+	}
+
 	for( i=0 ; i<deviceno ; i++)
 	{
 		Dev_Id=MKDEV(majorno,i);
@@ -26,6 +32,7 @@ int deletemydevices()
 		unregister_chrdev_region(Dev_Id , 1);
 		printk(KERN_INFO "unregistering has been done\n");
 	}
+
 	kfree(myDevices);
 	return 0;
 }

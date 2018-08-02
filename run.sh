@@ -31,6 +31,8 @@
 	fi	
 	read -p "Do u want to run the application :[y/n]" choice
 	if [ $choice == 'y' ]; then
+		echo -e "gcc myapp.c\n"
+		read
 		gcc myapp.c
 		echo "a.out file created"
 		./a.out

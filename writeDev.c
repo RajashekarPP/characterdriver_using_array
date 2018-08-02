@@ -2,7 +2,7 @@
 #include"declarations.h"
 
 int byteswritten =0 ;//datasize = count;
-
+int mm1;
 ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff_t *f_pos)
 {	
 	int ret;
@@ -39,13 +39,12 @@ ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff
 	{
 		byteswritten += strlen(buff);
 		*f_pos = byteswritten;
-		count -= size_of_registers;
 	}
 
 	printk(KERN_INFO "Bytes written = %d\n",byteswritten);
 	device->size = byteswritten ;
 
 	printk(KERN_INFO "ENDS %s\n",__func__);
+	mm1 = 1;
 	return byteswritten;
 }
-
