@@ -40,7 +40,7 @@ ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff
 	if(!ret)
 	{
 		byteswritten += strlen(buff);
-		*f_pos = byteswritten;
+		*f_pos += byteswritten;
 	}
 
 	printk(KERN_INFO "Bytes written = %d\n",byteswritten);
