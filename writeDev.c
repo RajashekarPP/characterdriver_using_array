@@ -36,7 +36,7 @@ ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff
 	head->data = kmalloc ( count , GFP_KERNEL );
 	memset( head->data , 0 , count );
 
-	ret = copy_from_user( head->data , buff+byteswritten , strlen(buff) );
+	ret = copy_from_user( head->data+f_pos , buff , strlen(buff) );
 	if(!ret)
 	{
 		byteswritten += strlen(buff);
