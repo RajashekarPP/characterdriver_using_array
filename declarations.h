@@ -25,6 +25,8 @@ extern int majorno;
 extern int minorno;
 extern int devicesCount;
 
+#endif
+
 struct myQset 
 {
 	char *data;
@@ -33,11 +35,14 @@ struct myQset
 struct myDev 
 {
 	struct myQset *data;
+	int quantum;	
+	int qset;
 	unsigned long size;	
 	struct cdev cdev;
+	
 };
 
-extern int byteswritten;
+
 extern int deletemydevices(void);
 int openDev(struct inode *, struct file *);
 int releaseDev(struct inode *, struct file *);
@@ -45,5 +50,6 @@ ssize_t readDev(struct file *, char *, size_t, loff_t *);
 ssize_t writeDev(struct file *, const char *, size_t, loff_t *);
 loff_t llseekDev (struct file *, loff_t, int);
 
-#endif
+
+
 

@@ -1,50 +1,45 @@
 #!/bin/bash
-#File Name : run
-#Author       : Raja Shekar 
+#File Name 	: run.sh
+#Author         : Raja Shekar 
 
 #user compilation in sequence
 
 	read -p "do u want to compile the myapp.c :[y/n] :" choice
 	if [ $choice == 'y' ]; then
 		make clean
+		sudo dmesg -C
 			if (make)then
 			echo "compilation sucessful"
-			read
 			fi
 		ls -ll	
 	fi	
 	read -p "Do u want to insert the node :[y/n] :" choice
 	if [ $choice == 'y' ]; then
 		sudo insmod ./modules/MyCharDev.ko
-		echo -e "Module has been inserted\n"
-		lsmod | grep MyCharDev	
+		echo -e "Modelu has been inserted\n"
+		lsmod | grep MyCharDev
+		dmesg 
 		read 
-		cat /proc/devices | grep MyCharDev 
+		cat /proc/devices | grep MyCharDev
 		echo "please enter major number"
 		read major
 		echo "sudo mknod ./MyCharDev c major minor"
-		sudo mknod -m 666 ./MyCharDev c $major 0	# -m is used to change the mode of the file to given mode no
-		cat /proc/devices | grep MyCharDev
+		sudo mknod -m 666 ./MyCharDev c $major 0
 #		sudo chmod 666 MyCharDev
 		ls -l MyCharDev
-		read
 	fi	
 	read -p "Do u want to run the application :[y/n]" choice
 	if [ $choice == 'y' ]; then
-		echo -e "gcc myapp.c\n"
-		read
 		gcc myapp.c
 		echo "a.out file created"
 		./a.out
-#		read
+		read
 		dmesg 
 	fi
 	sudo rmmod MyCharDev
 	dmesg
-	ls -l
-	echo -e "unlinking the VFS\n"
 	unlink MyCharDev
-	ls -l
+	echo -e "unlinking has been done\n"
 	make clean
-	rm ./a.out
+	rm a.out
 echo "running script is completed"

@@ -1,18 +1,11 @@
-/*
-Author 		: Raja shekar J
-File Name 	: myapp.c
-Description 	: Final application to read and write data from the character driver(MyCharDev)
-
-*/
-
 #include"cheaders.h"
 
 int main()
 {
-	int choice ,fdr,fdw, mode ;
-	static int readmode , writemode ,writtendata;
-	char writebuf[100] = "hello raja thanks for the compliment";
-	char readbuf[100]={0}; //making th buffer to be empty
+	int choice ,fd, mode , fileopen = 0;
+	static int readmode , writemode, written_data;
+	char writebuf[100] = "hello raja thanks   ";
+	char readbuf[100]={0}; //making the buffer to be empty
 
 	while(1)
 	{
@@ -23,70 +16,73 @@ int main()
 		switch(choice)
 		{
 			case 1 :
+				if(fileopen)
+				{
+					puts("file is already in open state please close the file and then open");break;
+				}
 				puts("In which mode should I open the file");
 				puts("enter 1. Read_Mode 2. Write_Mode ");
 				__fpurge(stdin);
 				scanf("%d",&mode);
 				switch(mode)
 				{
-					case 1:fdr = open("./MyCharDev" , O_RDONLY );
+					case 1:fd = open("./MyCharDev" , O_RDONLY );
 					       perror("open read");
-					       printf("%d\n",fdr);
-					       readmode = 1;
+					       printf("%d\n",fd);
+					       readmode=1; fileopen = 1;
 					       break;
-					case 2:fdw = open("./MyCharDev" , O_WRONLY);
+					case 2:fd = open("./MyCharDev" , O_WRONLY);
 					       perror("open write");
-					       printf("%d\n",fdw);
-					       writemode = 1;
+					       printf("%d\n",fd);
+					       writemode = 1; fileopen = 1;
 					       break;
 					default : puts("Invalid choice file not opened");
 				}
 				break;
 			case 2 :
-				if(writtendata == 0)
+				if(written_data == 0)
 				{
-					puts("No data is written to read form driver");break;
+					puts("data is not written to read");break;
 				}
-				if( (readmode == 1) && (fdr >0))
+				if( (readmode == 1) && (fd >0))
 				{
-					if(read(fdr , readbuf , 100) < 0)
+					int bytesread=0;
+					if( (bytesread=read(fd , readbuf , 20)) < 0)
 					{	
-						close(fdr);	
 						puts("unable to read data");break;
 					}
-					printf("msg read is \n%s\n",readbuf);
+					printf("msg read is \n%s of length %d\n",readbuf,bytesread);
 				}
 				else
 				{
 					puts("file not opened in readmode");
 				}
-				close(fdr);	
 				break;
 			case 3 :
-				if( (writemode == 1) && (fdw >0))
+				if( (writemode == 1) && (fd >0))
 				{	
 					int byteswritten=0;
-					byteswritten = write(fdw , writebuf , strlen(writebuf));
-//					byteswritten = write(fdw , writebuf , byteswritten+5);
+					byteswritten = write(fd , writebuf , strlen(writebuf));
 					if(byteswritten < 0)
 					{
-						close(fdw);
 						puts("unable to write data");break;
 					}
-					puts("msg has been written");
-					writtendata = 1;
+					printf("msg of length %d bytes has been written\n",byteswritten);
+					written_data = 1;
 				}
 				else
 				{
 					puts("file not opened in writemode");
-				}			
-				close(fdw);	
+				}				
 				break;
 			case 4:
-			//	close(fdr);
-			//	close(fdw);
-				printf("closed file fdr = %d\n closed file fdw = %d\n",fdr,fdw);
-				readmode=writemode=0;
+				if(fileopen)
+				{
+					close(fd);
+					printf("closed file fd = %d\n",fd);
+					fileopen = 0;
+					readmode=writemode=0;
+				}
 				break;
 			case 5:
 				puts("exiting from process");

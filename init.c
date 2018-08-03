@@ -14,8 +14,10 @@ struct myDev *myDevices;
 
 static struct file_operations fops = {
 	open:openDev,
+	//release:releaseDev,
 	read:readDev,
 	write:writeDev,
+	//llseek:llseekDev
 };
 
 static int __init MyCharDev_init(void)

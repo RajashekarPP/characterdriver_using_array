@@ -77,8 +77,11 @@ void __exit cdev_exit(void)
 int deletemydevices()
 {
 	int i;
+	struct myQset *head;
+	head =  mydevices->head;
 	if( 1 == mm1)
 	{
+		kfree(head->data);
 		kfree(mydevices->data);	
 	}
 	for(i=0; i<device_count ; i++)
