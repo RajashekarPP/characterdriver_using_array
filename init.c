@@ -51,6 +51,7 @@ static int __init MyCharDev_init(void)
 	}
 
 	memset(myDevices , 0 , deviceno*sizeof(struct myDev) );
+
 	for(i=0 ; i<deviceno ; i++)
 	{
 		cdev_init(&myDevices[i].cdev , &fops);
@@ -65,7 +66,8 @@ static int __init MyCharDev_init(void)
 
 	return SUCESS;
 fail :
-	deletemydevices();
+	kfree(myDevices);
+	unregister_chrdev_region(Dev_Id , 1);
 	return err;
 }
 

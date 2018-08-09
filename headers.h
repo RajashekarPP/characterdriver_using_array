@@ -11,7 +11,7 @@
 #include<linux/slab.h>		/* kmalloc and kfree */
 #include <linux/moduleparam.h>
 #include <linux/errno.h>        /* error codes */
-#include <linux/proc_fs.h>
+#include <linux/proc_fs.h>      //used to make proc file entry
 #include <asm/segment.h>
 #include <asm/uaccess.h>        /* copy_*_user */
 #include <linux/uaccess.h>

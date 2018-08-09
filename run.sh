@@ -19,7 +19,7 @@
 		echo -e "Modelu has been inserted\n"
 		lsmod | grep MyCharDev
 		dmesg 
-		read 
+#		read 
 		cat /proc/devices | grep MyCharDev
 		echo "please enter major number"
 		read major
@@ -33,7 +33,7 @@
 		gcc myapp.c
 		echo "a.out file created"
 		./a.out
-		read
+#		read
 		dmesg 
 	fi
 	sudo rmmod MyCharDev

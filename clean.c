@@ -5,11 +5,16 @@ extern dev_t Dev_Id;
 extern int majorno;
 extern int deviceno;
 extern struct myDev *myDevices;
-
+extern struct proc_dir_entry *ptr_proc;
 
 void __exit MyCharDev_exit(void)
 {	
+	struct myQset *head;
 	printk(KERN_INFO  "Exiting driver\n");
+	head = myDevices->data;
+	kfree(head->data);
+	kfree(head);
+	remove_proc_entry(DEVICE_NAME , ptr_proc);
 	deletemydevices();
 	printk(KERN_INFO "All unregistering has been sucessful\n");
 }

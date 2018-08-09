@@ -1,8 +1,6 @@
 #include"headers.h"
 #include"declarations.h"
 
-
-
 ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff_t *f_pos)
 {
 
@@ -17,12 +15,12 @@ ssize_t writeDev(struct file *filep, const char __user *buff, size_t count, loff
 	if( (filep->f_flags & O_ACCMODE ) != O_WRONLY)	
 	{
 		printk(KERN_INFO "File not opened in write mode\n");
-		return -1;
+		return -EINVAL;   //Invalid argument
 	}
 	if( !buff || (count<=0) )
 	{
 		printk(KERN_INFO "buffer or data size is not proper\n");
-		return -1;
+		return -EINVAL;
 	}
 	// allocation of memory for only one quantum set
 	head = device->data =kmalloc (sizeof(struct myQset) , GFP_KERNEL) ;
